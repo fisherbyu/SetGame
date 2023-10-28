@@ -44,10 +44,12 @@ var Deck: [CardFace] {
 
 
 struct SetGameLogic {
+    // MARK: --Properties
     var cards: Array<Card>
     var selectedIndexes: Array<Int>
-    
+    // MARK: --Initializer
     init() {
+        // Build Cards Array
         cards = []
         var i = 0
         for face in Deck {
@@ -56,7 +58,7 @@ struct SetGameLogic {
             i += 1
         }
         cards.shuffle()
-        
+        // Buil Array of Selected Indexes
         selectedIndexes = []
     }
     // MARK: --Game Logic
