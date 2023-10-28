@@ -7,12 +7,34 @@
 
 import SwiftUI
 
-struct Oval: View {
+struct ContentView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack {
+            ForEach(0..<3) { _ in
+                ZStack {
+                    Oval()
+                        .opacity(0.25)
+                    Oval().stroke(lineWidth: 8)
+                }
+                .aspectRatio(1/2, contentMode: .fit)
+            }
+            .rotationEffect(Angle(degrees: 180))
+        }
+        .foregroundStyle(.purple)
+        .padding()
+    }
+}
+
+struct Oval: Shape {
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        
+        path.addEllipse(in: rect)
+        
+        return path
     }
 }
 
 #Preview {
-    Oval()
+    ContentView()
 }
