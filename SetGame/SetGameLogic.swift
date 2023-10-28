@@ -7,29 +7,34 @@
 
 import Foundation
 import SwiftUI
-enum Shape: CaseIterable {
+enum CardShape: CaseIterable {
     case oval, diamond, squiggle
 }
+
 enum CardColor: CaseIterable {
     case red, green, purple
 }
+
 enum NumberOfShapes: Int, CaseIterable {
     case one = 1
     case two = 2
     case three = 3
 }
+
 enum Shade: CaseIterable {
     case solid, striped, open
 }
+
 struct CardFace: Equatable {
-    let shape: Shape
+    let shape: CardShape
     let color: CardColor
     let numberOfShapes: NumberOfShapes
     let shade: Shade
 }
+
 var Deck: [CardFace] {
     var cards: [CardFace] = []
-    for shape in Shape.allCases {
+    for shape in CardShape.allCases {
         for color in CardColor.allCases {
             for number in NumberOfShapes.allCases {
                 for shade in Shade.allCases {
@@ -48,6 +53,7 @@ struct SetGameLogic {
     var cards: Array<Card>
     var selectedIndexes: Array<Int>
     var numCardsDealt = 3
+    
     // MARK: --Initializer
     init() {
         // Build Cards Array
@@ -62,6 +68,7 @@ struct SetGameLogic {
         // Buil Array of Selected Indexes
         selectedIndexes = []
     }
+    
     // MARK: --Game Logic
     func isSet(indexes: [Int]) -> Bool {
         guard indexes.count == 3 else {
@@ -153,7 +160,7 @@ struct SetGameLogic {
     // Define Card Model
     struct Card: Identifiable {
         var id: Int
-        var shape: Shape
+        var shape: CardShape
         var numberOfShapes: NumberOfShapes
         var color: CardColor
         var shade: Shade

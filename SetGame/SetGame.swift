@@ -10,6 +10,7 @@ import Foundation
 @Observable class SetGame {
     // MARK: - Properties
     private var game = SetGameLogic()
+    
     // MARK: - Model Access
     var dealtCards: Array<SetGameLogic.Card> {
         return Array(game.cards.prefix(game.numCardsDealt))
@@ -19,12 +20,15 @@ import Foundation
     func dealMoreCards() {
         game.dealMoreCards()
     }
+    
     func newGame() {
         game = SetGameLogic()
     }
+    
     func selectCard(card: SetGameLogic.Card) {
         game.selectCard(card: card)
-    }    
+    }   
+    
     func countDealtCards() -> Int {
         return game.numCardsDealt
     }
