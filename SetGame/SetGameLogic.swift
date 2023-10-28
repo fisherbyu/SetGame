@@ -45,12 +45,7 @@ var Deck: [CardFace] {
 
 struct SetGameLogic {
     var cards: Array<Card>
-    var numCardsDealt = 3
-    var dealtCards: Array<Card> {
-        Array(cards.prefix(numCardsDealt))
-    }
     var selectedIndexes: Array<Int>
-//    var selectedIndexes: Array<Int?>
     
     init() {
         cards = []
@@ -65,9 +60,6 @@ struct SetGameLogic {
         selectedIndexes = []
     }
     // MARK: --Game Logic
-    mutating func dealMoreCards() {
-        numCardsDealt += 3
-    }
     func isSet(indexes: [Int]) -> Bool {
         guard indexes.count == 3 else {
             return false // A Set always has three cards
