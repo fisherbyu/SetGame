@@ -98,6 +98,7 @@ struct SetGameLogic {
     }
     
     mutating func removeMatchedCards() {
+        selectedIndexes.sort()
         cards.remove(at: selectedIndexes[2])
         cards.remove(at: selectedIndexes[1])
         cards.remove(at: selectedIndexes[0])
@@ -114,15 +115,15 @@ struct SetGameLogic {
                 if selectedIndexes.count == 3 {
                     matchCard(indexes: selectedIndexes)
                 }
-            } else {
+            } else if selectedIndexes.count == 3 {
                 if isSet(indexes: selectedIndexes) {
 //                    remove matched cards then add to selected indexes
                     removeMatchedCards()
                     updateSelect(index: targetIndex)
                 } else {
 //                    remove from queue if allready there
-                    if selectedIndexes.contains(card.id) {
-                        updateSelect(index: card.id)
+                    if let previouslySelectedIndex = selectedIndexes.firstIndex(matching: targetIndex) {
+                        updateSelect(index: targetIndex)
                     }
                 }
             }
