@@ -6,15 +6,13 @@
 //
 
 import SwiftUI
-//var validSet = [SetGameLogic.Card(id: 1, shape: .oval, numberOfShapes: .one, color: .red, shade: .open),
-//                SetGameLogic.Card(id: 2, shape: .oval, numberOfShapes: .two, color: .red, shade: .open),
-//                SetGameLogic.Card(id: 3, shape: .oval, numberOfShapes: .three, color: .red, shade: .open)
-//]
 
 
 struct SetGameView: View {
+    // Define Game
     let setgame: SetGame
     var body: some View {
+        // Define Layout, allow for resizing
         GeometryReader { geometry in
             VStack {
                 LazyVGrid(columns: columns(numCards: setgame.dealtCards.count, for: geometry.size)) {
@@ -26,12 +24,21 @@ struct SetGameView: View {
                     }
                 }
                 Spacer()
+                // Game Controls
                 HStack {
-                    if setgame.dealtCards.count < 81 {
+                    Spacer()
+                    // Only add three is there are cards to deal
+                    if setgame.countDealtCards() < 81 {
                         Button("Deal 3") {
                             setgame.dealMoreCards()
                         }
+                        Spacer()
                     }
+                    Button("New Game") {
+                        setgame.newGame()
+                    }
+                    Spacer()
+                    
                 }
             }
             .padding()

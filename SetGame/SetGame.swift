@@ -20,9 +20,12 @@ import Foundation
         game.dealMoreCards()
     }
     func newGame() {
-        print("NEW GAME HERE")
+        game = SetGameLogic()
     }
     func selectCard(card: SetGameLogic.Card) {
         game.selectCard(card: card)
     }    
+    func countDealtCards() -> Int {
+        return game.numCardsDealt
+    }
 }
