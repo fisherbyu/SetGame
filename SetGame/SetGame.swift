@@ -25,7 +25,5 @@ import Foundation
     }
     func selectCard(card: SetGameLogic.Card) {
         game.selectCard(card: card)
-    }
-
-    
+    }    
 }

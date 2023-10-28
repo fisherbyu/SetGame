@@ -104,7 +104,6 @@ struct SetGameLogic {
         cards.remove(at: selectedIndexes[0])
         selectedIndexes = []
     }
-
     
     mutating func selectCard(card: Card) {
         
@@ -117,32 +116,17 @@ struct SetGameLogic {
                 }
             } else if selectedIndexes.count == 3 {
                 if isSet(indexes: selectedIndexes) {
-//                    remove matched cards then add to selected indexes
+                    // Remove matched cards then add to selected indexes
                     removeMatchedCards()
                     updateSelect(index: targetIndex)
                 } else {
-//                    remove from queue if allready there
-                    if let previouslySelectedIndex = selectedIndexes.firstIndex(matching: targetIndex) {
+                    // Remove from queue if allready there
+                    if selectedIndexes.firstIndex(matching: targetIndex) != nil {
                         updateSelect(index: targetIndex)
                     }
                 }
             }
         }
-    
-//        if selectedIndexes.count < 3 {
-//            if let targetIndex = cards.firstIndex(matching: card) {
-//                cards[targetIndex].isSelected.toggle()
-//            }
-//            selectedIndexes.append(card.id)
-//        } else if selectedIndexes.count == 3 {
-//            if isSet(indexes: selectedIndexes) {
-//                for index in selectedIndexes {
-//                    cards[index].isMatched = true
-//                }
-//                selectedIndexes = []
-//            }
-//        }
-        
     }
 
     // Define Card Model
