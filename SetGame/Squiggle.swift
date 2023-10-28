@@ -9,13 +9,18 @@ import SwiftUI
 
 struct SquiggeView: View {
     var numShapes: Int
+    var shade: Shade
     var body: some View {
         HStack {
             ForEach(0..<2) { _ in
                 ZStack {
-                    Squiggle()
-                        .opacity(0.25)
-                    Squiggle().stroke(lineWidth: 8)
+                    if shade == .solid {
+                        Squiggle()
+                            .opacity(0.25)
+                        Squiggle().stroke(lineWidth: 8)
+                    } else if shade == .open {
+                        Squiggle().stroke(lineWidth: 8)
+                    }
                 }
                 .aspectRatio(1/2, contentMode: .fit)
             }
@@ -63,5 +68,5 @@ struct Squiggle: Shape {
 }
 
 #Preview {
-    SquiggeView(numShapes: 3)
+    SquiggeView(numShapes: 3, shade: .open)
 }

@@ -9,13 +9,18 @@ import SwiftUI
 
 struct DiamondView: View {
     var numShapes: Int
+    var shade: Shade
     var body: some View {
         HStack {
             ForEach(0..<3) { _ in
                 ZStack {
-                    Diamond()
-                        .opacity(0.25)
-                    Diamond().stroke(lineWidth: 8)
+                    if shade == .solid {
+                        Diamond()
+                            .opacity(0.25)
+                        Diamond().stroke(lineWidth: 8)
+                    } else if shade == .open {
+                        Diamond().stroke(lineWidth: 8)
+                    }
                 }
                 .aspectRatio(1/2, contentMode: .fit)
             }
@@ -41,5 +46,5 @@ struct Diamond: Shape {
 }
 
 #Preview {
-    DiamondView(numShapes: 3).padding(30)
+    DiamondView(numShapes: 3, shade: .solid)
 }

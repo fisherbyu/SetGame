@@ -7,14 +7,21 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct OvalView: View {
+    var numShapes: Int
+    var shade: Shade
     var body: some View {
         HStack {
             ForEach(0..<3) { _ in
                 ZStack {
-                    Oval()
-                        .opacity(0.25)
-                    Oval().stroke(lineWidth: 8)
+                    if shade == .solid {
+                        Oval()
+                            .opacity(0.25)
+                        Oval().stroke(lineWidth: 8)
+                    } else if shade == .open {
+                        Oval().stroke(lineWidth: 8)
+                    }
+                    
                 }
                 .aspectRatio(1/2, contentMode: .fit)
             }
@@ -36,5 +43,5 @@ struct Oval: Shape {
 }
 
 #Preview {
-    ContentView()
+    OvalView(numShapes: 3, shade: .solid)
 }
