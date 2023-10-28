@@ -47,6 +47,7 @@ struct SetGameLogic {
     // MARK: --Properties
     var cards: Array<Card>
     var selectedIndexes: Array<Int>
+    var numCardsDealt = 3
     // MARK: --Initializer
     init() {
         // Build Cards Array
@@ -75,6 +76,10 @@ struct SetGameLogic {
         let shadeMatch = (card1.shade == card2.shade && card2.shade == card3.shade) || (card1.shade != card2.shade && card2.shade != card3.shade && card1.shade != card3.shade)
 
         return shapeMatch && quantityMatch && colorMatch && shadeMatch
+    }
+    
+    mutating func dealMoreCards() {
+        numCardsDealt += 3
     }
     
     mutating func updateSelect(index: Int) {
