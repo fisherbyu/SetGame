@@ -79,7 +79,12 @@ struct SetGameLogic {
     }
     
     mutating func dealMoreCards() {
-        numCardsDealt += 3
+        if isSet(indexes: selectedIndexes) {
+            removeMatchedCards()
+        } else {
+            numCardsDealt += 3
+        }
+        
     }
     
     mutating func updateSelect(index: Int) {
