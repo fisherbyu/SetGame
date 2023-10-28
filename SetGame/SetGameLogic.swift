@@ -105,6 +105,13 @@ struct SetGameLogic {
         selectedIndexes = []
     }
     
+    mutating func resetSelection() {
+        for i in selectedIndexes {
+            cards[i].isSelected.toggle()
+        }
+        selectedIndexes = []
+    }
+    
     mutating func selectCard(card: Card) {
         
         // Locate Card in Deck
@@ -122,6 +129,10 @@ struct SetGameLogic {
                 } else {
                     // Remove from queue if allready there
                     if selectedIndexes.firstIndex(matching: targetIndex) != nil {
+                        updateSelect(index: targetIndex)
+                    } else {
+                        // New Selection
+                        resetSelection()
                         updateSelect(index: targetIndex)
                     }
                 }
