@@ -98,9 +98,9 @@ struct SetGameLogic {
     }
     
     mutating func removeMatchedCards() {
-        for i in selectedIndexes {
-            cards.remove(at: i)
-        }
+        cards.remove(at: selectedIndexes[2])
+        cards.remove(at: selectedIndexes[1])
+        cards.remove(at: selectedIndexes[0])
         selectedIndexes = []
     }
 
