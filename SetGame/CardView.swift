@@ -21,19 +21,20 @@ struct CardView: View {
                 RoundedRectangle(cornerRadius: Card.cornerRadius).stroke()
                 VStack {
                     HStack {
-                        ForEach(content.shapes, id: \.self) { shape in
-                            Text(shape)
+                        if card.shape == .diamond {
+                            DiamondView(numShapes: card.numberOfShapes.rawValue, shade: card.shade, color: content.color)
+                        } else if card.shape == .oval {
+                            OvalView(numShapes: card.numberOfShapes.rawValue, shade: card.shade, color: content.color)
+                        } else if card.shape == .squiggle {
+                            SquiggeView(numShapes: card.numberOfShapes.rawValue, shade: card.shade, color: content.color)
                         }
                     }
-                    Text("\(content.shade)")
                 }
             }
             .foregroundStyle(content.color)
         }
         .aspectRatio(Card.aspectRatio, contentMode: .fit)
     }
-    
-    
     
     // MARK: -- Display Values
     private struct Card {
@@ -51,26 +52,6 @@ struct CardView: View {
                 return .green
             case .purple:
                 return .purple
-            }
-        }
-        var shapes: Array<String> {
-            switch card.shape {
-            case .diamond:
-                return Array(repeating: "<>", count: card.numberOfShapes.rawValue)
-            case .oval:
-                return Array(repeating: "oo", count: card.numberOfShapes.rawValue)
-            case .squiggle:
-                return Array(repeating: "~~", count: card.numberOfShapes.rawValue)
-            }
-        }
-        var shade: String {
-            switch card.shade {
-            case .open:
-                return "open"
-            case .solid:
-                return "solid"
-            case .striped:
-                return "striped"
             }
         }
         var selectionColor: Color {
