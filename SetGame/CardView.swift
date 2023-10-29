@@ -21,13 +21,7 @@ struct CardView: View {
                 RoundedRectangle(cornerRadius: Card.cornerRadius).stroke()
                 VStack {
                     HStack {
-                        if card.shape == .diamond {
-                            DiamondView(numShapes: card.numberOfShapes.rawValue, shade: card.shade, color: content.color)
-                        } else if card.shape == .oval {
-                            OvalView(numShapes: card.numberOfShapes.rawValue, shade: card.shade, color: content.color)
-                        } else if card.shape == .squiggle {
-                            SquiggeView(numShapes: card.numberOfShapes.rawValue, shade: card.shade, color: content.color)
-                        }
+                        Text("Place Shapes Here")
                     }
                 }
             }
