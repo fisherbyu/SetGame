@@ -10,6 +10,7 @@ import SwiftUI
 struct OvalView: View {
     var numShapes: Int
     var shade: Shade
+    var color: Color
     var body: some View {
         HStack {
             ForEach(0..<3) { _ in
@@ -20,14 +21,16 @@ struct OvalView: View {
                         Oval().stroke(lineWidth: 8)
                     } else if shade == .open {
                         Oval().stroke(lineWidth: 8)
+                    } else if shade == .striped {
+                        Oval().stroke(lineWidth: 8)
+                        Oval().stroke(lineWidth: 25)
                     }
-                    
                 }
                 .aspectRatio(1/2, contentMode: .fit)
             }
             .rotationEffect(Angle(degrees: 180))
         }
-        .foregroundStyle(.purple)
+        .foregroundStyle(color)
         .padding()
     }
 }
@@ -43,5 +46,5 @@ struct Oval: Shape {
 }
 
 #Preview {
-    OvalView(numShapes: 3, shade: .solid)
+    OvalView(numShapes: 3, shade: .striped, color: .purple)
 }

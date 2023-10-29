@@ -10,6 +10,7 @@ import SwiftUI
 struct SquiggeView: View {
     var numShapes: Int
     var shade: Shade
+    var color: Color
     var body: some View {
         HStack {
             ForEach(0..<2) { _ in
@@ -20,14 +21,16 @@ struct SquiggeView: View {
                         Squiggle().stroke(lineWidth: 8)
                     } else if shade == .open {
                         Squiggle().stroke(lineWidth: 8)
+                    } else if shade == .striped {
+                        Squiggle().stroke(lineWidth: 8)
+                        Squiggle().stroke(lineWidth: 25)
                     }
                 }
                 .aspectRatio(1/2, contentMode: .fit)
             }
             .rotationEffect(Angle(degrees: 180))
         }
-        .foregroundStyle(.purple)
-//        .background(.pink)
+        .foregroundStyle(color)
         .padding()
     }
 }
@@ -68,5 +71,5 @@ struct Squiggle: Shape {
 }
 
 #Preview {
-    SquiggeView(numShapes: 3, shade: .open)
+    SquiggeView(numShapes: 3, shade: .striped, color: .green)
 }

@@ -10,6 +10,7 @@ import SwiftUI
 struct DiamondView: View {
     var numShapes: Int
     var shade: Shade
+    var color: Color
     var body: some View {
         HStack {
             ForEach(0..<3) { _ in
@@ -20,13 +21,16 @@ struct DiamondView: View {
                         Diamond().stroke(lineWidth: 8)
                     } else if shade == .open {
                         Diamond().stroke(lineWidth: 8)
+                    } else if shade == .striped {
+                        Diamond().stroke(lineWidth: 8)
+                        Diamond().stroke(lineWidth: 25)
                     }
                 }
                 .aspectRatio(1/2, contentMode: .fit)
             }
             .rotationEffect(Angle(degrees: 180))
         }
-        .foregroundStyle(.purple)
+        .foregroundStyle(color)
         .padding()
     }
 }
@@ -46,5 +50,5 @@ struct Diamond: Shape {
 }
 
 #Preview {
-    DiamondView(numShapes: 3, shade: .solid)
+    DiamondView(numShapes: 3, shade: .striped, color: .red)
 }
