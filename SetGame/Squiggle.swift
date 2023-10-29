@@ -7,34 +7,6 @@
 
 import SwiftUI
 
-struct SquiggeView: View {
-    var numShapes: Int
-    var shade: Shade
-    var color: Color
-    var body: some View {
-        HStack {
-            ForEach(0..<2) { _ in
-                ZStack {
-                    if shade == .solid {
-                        Squiggle()
-                            .opacity(0.25)
-                        Squiggle().stroke(lineWidth: 8)
-                    } else if shade == .open {
-                        Squiggle().stroke(lineWidth: 8)
-                    } else if shade == .striped {
-                        Squiggle().stroke(lineWidth: 8)
-                        Squiggle().stroke(lineWidth: 25)
-                    }
-                }
-                .aspectRatio(1/2, contentMode: .fit)
-            }
-            .rotationEffect(Angle(degrees: 180))
-        }
-        .foregroundStyle(color)
-        .padding()
-    }
-}
-
 let segments = [
     (CGPoint(x: 630, y: 540),  CGPoint(x: 1124, y: 369), CGPoint(x: 897, y: 608)),
     (CGPoint(x: 270, y: 530),  CGPoint(x: 523, y: 513),  CGPoint(x: 422, y: 420)),
@@ -70,6 +42,14 @@ struct Squiggle: Shape {
     }
 }
 
+struct SquigglePreview: View {
+    var body: some View {
+        Squiggle()
+            .fill(Color.blue)
+            .padding(50)
+    }
+}
+
 #Preview {
-    SquiggeView(numShapes: 3, shade: .striped, color: .green)
+    SquigglePreview()
 }

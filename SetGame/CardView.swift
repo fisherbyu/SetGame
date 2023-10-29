@@ -21,10 +21,11 @@ struct CardView: View {
                 RoundedRectangle(cornerRadius: Card.cornerRadius).stroke()
                 VStack {
                     HStack {
-                        Text("Place Shapes Here")
+                        ShapeView(card: card, color: content.color, size: geometry.size)
                     }
                 }
             }
+            .aspectRatio(Card.aspectRatio, contentMode: .fit)
             .foregroundStyle(content.color)
         }
         .aspectRatio(Card.aspectRatio, contentMode: .fit)
@@ -61,18 +62,14 @@ struct CardView: View {
         }
         
     }
-    
-    private func systemFont(for size: CGSize) -> Font {
-        .system(size: min(size.width, size.height) * Card.fontScaleFactor)
-    }
 }
 
 let testCard = SetGameLogic.Card(
     id: 1,
-    shape: .oval,
+    shape: .squiggle,
     numberOfShapes: .three,
     color: .green,
-    shade: .solid
+    shade: .striped
 )
 
 #Preview {

@@ -21,6 +21,7 @@ struct SetGameView: View {
                             .onTapGesture {
                                 setgame.selectCard(card: card)
                             }
+                        .aspectRatio(2/3, contentMode: .fill)
                     }
                 }
                 Spacer()
@@ -44,6 +45,30 @@ struct SetGameView: View {
             .padding()
         }
     }
+    
+//    func calculateNumberOfColumns(size: CGSize, cardCount: Int) -> [GridItem] {
+//        var columns = 2 // Minimum number of columns
+//        var spacing: CGFloat = 1
+//        var spacingWidth: CGFloat = CGFloat(columns - 1) * spacing
+//        var proposedCardWidth: CGFloat = (size.width - spacingWidth) / CGFloat(columns)
+//        var rows = (cardCount + columns - 1) / columns
+//
+//        // Calculate the height required for rows of the proposed card width
+//        let aspectRatio: CGFloat = 1.5 // Change this to your card's aspect ratio
+//        var requiredHeight = (proposedCardWidth * aspectRatio + spacing) * CGFloat(rows)
+//
+//        // Continue adding columns until the required height fits within the available size
+//        while requiredHeight > size.height {
+//            columns += 1
+//            spacingWidth = CGFloat(columns - 1) * spacing
+//            proposedCardWidth = (size.width - spacingWidth) / CGFloat(columns)
+//            rows = (cardCount + columns - 1) / columns
+//            requiredHeight = (proposedCardWidth * aspectRatio + spacing) * CGFloat(rows)
+//        }
+//
+//        return Array(repeating: GridItem(), count: columns)
+//    }
+
     
     private func columns(numCards: Int, for size: CGSize) -> [GridItem] {
         var desiredCardWidth: Double {

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		22023DEA2AEE397600024DE4 /* ShapeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22023DE92AEE397600024DE4 /* ShapeView.swift */; };
+		22023DEC2AEE3E0000024DE4 /* StripedBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22023DEB2AEE3E0000024DE4 /* StripedBackground.swift */; };
 		22A2CE632AEDB09100E34F53 /* Squiggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A2CE622AEDB09100E34F53 /* Squiggle.swift */; };
 		22A2CE652AEDB24000E34F53 /* Diamond.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A2CE642AEDB24000E34F53 /* Diamond.swift */; };
 		22A2CE672AEDB5D900E34F53 /* Oval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A2CE662AEDB5D900E34F53 /* Oval.swift */; };
@@ -22,6 +24,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		22023DE92AEE397600024DE4 /* ShapeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeView.swift; sourceTree = "<group>"; };
+		22023DEB2AEE3E0000024DE4 /* StripedBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripedBackground.swift; sourceTree = "<group>"; };
 		22A2CE622AEDB09100E34F53 /* Squiggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Squiggle.swift; sourceTree = "<group>"; };
 		22A2CE642AEDB24000E34F53 /* Diamond.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diamond.swift; sourceTree = "<group>"; };
 		22A2CE662AEDB5D900E34F53 /* Oval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Oval.swift; sourceTree = "<group>"; };
@@ -118,6 +122,8 @@
 				22F5A8D72AEB401800AA3511 /* SetGameApp.swift */,
 				22F5A8D92AEB401800AA3511 /* SetGameView.swift */,
 				22F5A8EC2AEB774F00AA3511 /* CardView.swift */,
+				22023DE92AEE397600024DE4 /* ShapeView.swift */,
+				22023DEB2AEE3E0000024DE4 /* StripedBackground.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -206,6 +212,8 @@
 				22F5A8DA2AEB401800AA3511 /* SetGameView.swift in Sources */,
 				22A2CE632AEDB09100E34F53 /* Squiggle.swift in Sources */,
 				22F5A8EB2AEB5E9400AA3511 /* SetGame.swift in Sources */,
+				22023DEC2AEE3E0000024DE4 /* StripedBackground.swift in Sources */,
+				22023DEA2AEE397600024DE4 /* ShapeView.swift in Sources */,
 				22C1998B2AED6D3F00BED2A0 /* Int.swift in Sources */,
 				22F5A8D82AEB401800AA3511 /* SetGameApp.swift in Sources */,
 				22A2CE652AEDB24000E34F53 /* Diamond.swift in Sources */,

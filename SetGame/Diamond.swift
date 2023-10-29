@@ -7,48 +7,35 @@
 
 import SwiftUI
 
-struct DiamondView: View {
-    var numShapes: Int
-    var shade: Shade
-    var color: Color
-    var body: some View {
-        HStack {
-            ForEach(0..<3) { _ in
-                ZStack {
-                    if shade == .solid {
-                        Diamond()
-                            .opacity(0.25)
-                        Diamond().stroke(lineWidth: 8)
-                    } else if shade == .open {
-                        Diamond().stroke(lineWidth: 8)
-                    } else if shade == .striped {
-                        Diamond().stroke(lineWidth: 8)
-                        Diamond().stroke(lineWidth: 25)
-                    }
-                }
-                .aspectRatio(1/2, contentMode: .fit)
-            }
-            .rotationEffect(Angle(degrees: 180))
-        }
-        .foregroundStyle(color)
-        .padding()
+
+struct Diamond: Shape {
+    
+    func path(in rect: CGRect) -> Path {
+        let start = CGPoint(x: rect.minX, y: rect.midY)
+        let firstPoint = CGPoint(x: rect.midX, y: rect.minY)
+        let secondPoint = CGPoint(x: rect.maxX, y: rect.midY)
+        let end = CGPoint(x: rect.midX, y: rect.maxY)
+        
+        var p = Path()
+        p.move(to: start)
+        p.addLine(to: firstPoint)
+        p.addLine(to: secondPoint)
+        p.addLine(to: end)
+        p.addLine(to: start)
+        p.addLine(to: firstPoint)
+        
+        return p
     }
 }
 
-struct Diamond: Shape {
-    func path(in rect: CGRect) -> Path {
-        var path = Path()
-        
-        path.move(to: CGPoint(x: rect.midX, y: rect.minY))
-        path.addLine(to: CGPoint(x: rect.maxX, y: rect.midY))
-        path.addLine(to: CGPoint(x: rect.midX, y: rect.maxY))
-        path.addLine(to: CGPoint(x: rect.minX, y: rect.midY))
-        path.closeSubpath()
-        
-        return path
+struct DiamondPreview: View {
+    var body: some View {
+        Diamond()
+            .fill(Color.blue)
+            .padding(50)
     }
 }
 
 #Preview {
-    DiamondView(numShapes: 3, shade: .striped, color: .red)
+    DiamondPreview()
 }
