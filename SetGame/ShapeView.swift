@@ -14,7 +14,7 @@ struct ShapeView: View {
     
     var body: some View {
         HStack {
-            Spacer()
+            Spacer(minLength: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/)
             switch card.numberOfShapes {
             case .one:
                 shapeBuilder().padding(10)
@@ -26,15 +26,15 @@ struct ShapeView: View {
                 shapeBuilder()
                 shapeBuilder()
             }
-            Spacer()
+            Spacer(minLength: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/)
         }
         .padding(1)
     }
     
     @ViewBuilder
     private func shapeBuilder() -> some View {
-        let height = size.height * Styles.reduceHeight
-        let width = size.width * Styles.reduceWidth
+//        let height = size.height * Styles.reduceHeight
+//        let width = size.width * Styles.reduceWidth
         
         ZStack {
             // Define Shapes + Borders
