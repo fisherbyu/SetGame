@@ -33,7 +33,7 @@ struct CardView: View {
     
     // MARK: -- Display Values
     private struct Card {
-        static let aspectRatio: Double = 2.5/2
+        static let aspectRatio: Double = 3/2
         static let cornerRadius: Double = 10.0
         static let fontScaleFactor = 0.75
     }

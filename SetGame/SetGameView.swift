@@ -15,7 +15,7 @@ struct SetGameView: View {
         // Define Layout, allow for resizing
         GeometryReader { geometry in
             VStack {
-                LazyVGrid(columns: columns(numCards: setgame.dealtCards.count, for: geometry.size)) {
+                LazyVGrid(columns: getNumColoumns(size: geometry.size)) {
                     ForEach(setgame.dealtCards) { card in
                         CardView(card: card)
                             .onTapGesture {
@@ -45,47 +45,25 @@ struct SetGameView: View {
             .padding()
         }
     }
-    
-//    func calculateNumberOfColumns(size: CGSize, cardCount: Int) -> [GridItem] {
-//        var columns = 2 // Minimum number of columns
-//        var spacing: CGFloat = 1
-//        var spacingWidth: CGFloat = CGFloat(columns - 1) * spacing
-//        var proposedCardWidth: CGFloat = (size.width - spacingWidth) / CGFloat(columns)
-//        var rows = (cardCount + columns - 1) / columns
-//
-//        // Calculate the height required for rows of the proposed card width
-//        let aspectRatio: CGFloat = 1.5 // Change this to your card's aspect ratio
-//        var requiredHeight = (proposedCardWidth * aspectRatio + spacing) * CGFloat(rows)
-//
-//        // Continue adding columns until the required height fits within the available size
-//        while requiredHeight > size.height {
-//            columns += 1
-//            spacingWidth = CGFloat(columns - 1) * spacing
-//            proposedCardWidth = (size.width - spacingWidth) / CGFloat(columns)
-//            rows = (cardCount + columns - 1) / columns
-//            requiredHeight = (proposedCardWidth * aspectRatio + spacing) * CGFloat(rows)
-//        }
-//
-//        return Array(repeating: GridItem(), count: columns)
-//    }
+    func getNumColoumns(size: CGSize) -> [GridItem] {
+        var columns = 3
+        let numCards = setgame.countDealtCards()
+        let spacing: CGFloat = 0.5
+        var spacingWidth: CGFloat = CGFloat(columns - 1) * spacing
+        var proposedCardWidth: CGFloat = (size.width - spacingWidth) / CGFloat(columns)
+        var rows = (numCards + columns - 1) / columns
 
-    
-    private func columns(numCards: Int, for size: CGSize) -> [GridItem] {
-        var desiredCardWidth: Double {
-            if numCards < 22 {
-                return 125
-            }
-            else if numCards < 28 {
-                return 93
-            } else {
-                return 62
-            }
-            
+        let aspectRatio: CGFloat = 2/3
+        var requiredHeight = (proposedCardWidth * aspectRatio + spacing) * CGFloat(rows)
+
+        while requiredHeight > size.height {
+            columns += 1
+            spacingWidth = CGFloat(columns - 1) * spacing
+            proposedCardWidth = (size.width - spacingWidth) / CGFloat(columns)
+            rows = (numCards + columns - 1) / columns
+            requiredHeight = (proposedCardWidth * aspectRatio + spacing) * CGFloat(rows)
         }
-        return Array(
-            repeating: GridItem(.flexible()),
-            count: Int(size.width / desiredCardWidth)
-        )
+        return Array(repeating: GridItem(), count: columns)
     }
 }
 
