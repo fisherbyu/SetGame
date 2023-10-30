@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 struct SetGameView: View {
     // Define Game
     let setgame: SetGame
@@ -44,6 +43,7 @@ struct SetGameView: View {
             .padding()
         }
     }
+    
     private func getNumColoumns(size: CGSize) -> [GridItem] {
         var columns = 3
         let numCards = setgame.countDealtCards()

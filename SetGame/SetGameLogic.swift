@@ -47,7 +47,7 @@ var Deck: [CardFace] {
     return cards
 }
 
-
+// Game Engine
 struct SetGameLogic {
     // MARK: --Properties
     var deck: Array<Card>
@@ -179,7 +179,6 @@ struct SetGameLogic {
                 }
             }
         }
-        
     }
     
     // MARK: -- Components
@@ -189,10 +188,6 @@ struct SetGameLogic {
         var numberOfShapes: NumberOfShapes
         var color: CardColor
         var shade: Shade
-//        var shapes: [Shape] {
-//            return Array(repeating: shape, count: numberOfShapes.rawValue)
-//        }
-//        var isFaceUp = true
         var isMatched = false
         var isSelected = false
     }
