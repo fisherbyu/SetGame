@@ -13,22 +13,24 @@ struct ShapeView: View {
     var size: CGSize
     
     var body: some View {
-        HStack {
-            Spacer(minLength: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/)
-            switch card.numberOfShapes {
-            case .one:
-                shapeBuilder().padding(10)
-            case .two:
-                shapeBuilder()
-                shapeBuilder()
-            case .three:
-                shapeBuilder()
-                shapeBuilder()
-                shapeBuilder()
+        GeometryReader { geometry in
+            HStack {
+                Spacer(minLength: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/)
+                switch card.numberOfShapes {
+                case .one:
+                    shapeBuilder().padding(10)
+                case .two:
+                    shapeBuilder()
+                    shapeBuilder()
+                case .three:
+                    shapeBuilder()
+                    shapeBuilder()
+                    shapeBuilder()
+                }
+                Spacer(minLength: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/)
             }
-            Spacer(minLength: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/)
+            .frame(width: geometry.size.width * 0.98, height: geometry.size.height * 0.98)
         }
-        .padding(1)
     }
     
     @ViewBuilder
@@ -79,11 +81,11 @@ struct ShapeView: View {
         static let lineWidth: CGFloat = 1
         static let reduceWidth: CGFloat = 0.65
         static let reduceHeight: CGFloat = 0.15
-
-        
     }
 }
 
-//#Preview {
-//    ShapeView(
-//}
+let testSize = CGSize(width: 3, height: 2)
+
+#Preview {
+    ShapeView(card: testCard, color: .green, size: testSize)
+}

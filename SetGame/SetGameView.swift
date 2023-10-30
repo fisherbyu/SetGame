@@ -45,7 +45,7 @@ struct SetGameView: View {
             .padding()
         }
     }
-    func getNumColoumns(size: CGSize) -> [GridItem] {
+    private func getNumColoumns(size: CGSize) -> [GridItem] {
         var columns = 3
         let numCards = setgame.countDealtCards()
         let spacing: CGFloat = 0.5
@@ -64,6 +64,14 @@ struct SetGameView: View {
             requiredHeight = (proposedCardWidth * aspectRatio + spacing) * CGFloat(rows)
         }
         return Array(repeating: GridItem(), count: columns)
+    }
+    
+    private func randomOffscreenLocation() -> CGSize {
+        let angle = Double.random(in: 0...359)
+        let radius = max(UIScreen.main.bounds.size.width, UIScreen.main.bounds.size.height) * 2
+        let x = radius * cos(angle)
+        let y = radius * sin(angle)
+        return CGSize(width: x, height: y)
     }
 }
 
