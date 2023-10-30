@@ -51,6 +51,7 @@ var Deck: [CardFace] {
 struct SetGameLogic {
     // MARK: --Properties
     var cards: Array<Card>
+    var dealtCards: Array<Card>
     var selectedIndexes: Array<Int>
     var numCardsDealt = 3
     
@@ -67,9 +68,11 @@ struct SetGameLogic {
         cards.shuffle()
         // Buil Array of Selected Indexes
         selectedIndexes = []
+        dealtCards = []
     }
     
     // MARK: --Game Logic
+    
     func isSet(indexes: [Int]) -> Bool {
         guard indexes.count == 3 else {
             return false // A Set always has three cards
@@ -83,15 +86,6 @@ struct SetGameLogic {
         let shadeMatch = (card1.shade == card2.shade && card2.shade == card3.shade) || (card1.shade != card2.shade && card2.shade != card3.shade && card1.shade != card3.shade)
 
         return shapeMatch && quantityMatch && colorMatch && shadeMatch
-    }
-    
-    mutating func dealMoreCards() {
-        if isSet(indexes: selectedIndexes) {
-            removeMatchedCards()
-        } else {
-            numCardsDealt += 3
-        }
-        
     }
     
     mutating func updateSelect(index: Int) {
@@ -129,6 +123,7 @@ struct SetGameLogic {
         selectedIndexes = []
     }
     
+    // MARK: -- User Intents
     mutating func selectCard(card: Card) {
         
         // Locate Card in Deck
@@ -156,8 +151,17 @@ struct SetGameLogic {
             }
         }
     }
-
-    // Define Card Model
+    
+    mutating func dealMoreCards() {
+        if isSet(indexes: selectedIndexes) {
+            removeMatchedCards()
+        } else {
+            numCardsDealt += 3
+        }
+        
+    }
+    
+    // MARK: -- Components
     struct Card: Identifiable {
         var id: Int
         var shape: CardShape
