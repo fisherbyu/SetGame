@@ -141,8 +141,8 @@ struct SetGameLogic {
             } else if selectedIndexes.count == 3 {
                 if isSet(indexes: selectedIndexes) {
                     // Remove matched cards then add to selected indexes
-                    removeMatchedCards()
                     updateSelect(index: targetIndex)
+                    removeMatchedCards()
                 } else {
                     // Remove from queue if allready there
                     if selectedIndexes.firstIndex(matching: targetIndex) != nil {
