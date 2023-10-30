@@ -51,7 +51,7 @@ var Deck: [CardFace] {
 struct SetGameLogic {
     // MARK: --Properties
     var deck: Array<Card>
-    var dealtCards: Array<Card>
+    var cards: Array<Card>
     var initialCardsToDeal = 3
     var selectedIndexes: Array<Int>
             
@@ -71,10 +71,10 @@ struct SetGameLogic {
         selectedIndexes = []
         
         // Deal initial Cards
-        dealtCards = []
+        cards = []
         for _ in 0..<initialCardsToDeal {
             let cardToDeal = deck.remove(at: 0)
-            dealtCards.append(cardToDeal)
+            cards.append(cardToDeal)
         }
     }
     
@@ -83,9 +83,9 @@ struct SetGameLogic {
         guard indexes.count == 3 else {
             return false // A Set always has three cards
         }
-        let card1 = dealtCards[indexes[0]]
-        let card2 = dealtCards[indexes[1]]
-        let card3 = dealtCards[indexes[2]]
+        let card1 = cards[indexes[0]]
+        let card2 = cards[indexes[1]]
+        let card3 = cards[indexes[2]]
         let shapeMatch = (card1.shape == card2.shape && card2.shape == card3.shape) || (card1.shape != card2.shape && card2.shape != card3.shape && card1.shape != card3.shape)
         let quantityMatch = (card1.numberOfShapes == card2.numberOfShapes && card2.numberOfShapes == card3.numberOfShapes) || (card1.numberOfShapes != card2.numberOfShapes && card2.numberOfShapes != card3.numberOfShapes && card1.numberOfShapes != card3.numberOfShapes)
         let colorMatch = (card1.color == card2.color && card2.color == card3.color) || (card1.color != card2.color && card2.color != card3.color && card1.color != card3.color)
@@ -96,7 +96,7 @@ struct SetGameLogic {
     
     mutating func updateSelect(index: Int) {
         // Toggle Selection Attribute
-        dealtCards[index].isSelected.toggle()
+        cards[index].isSelected.toggle()
         
         // Toggle Presence of Index in selectedIndexes
         if let targetIndex = selectedIndexes.enumerated().first(where: { $0.element == index })?.offset {
@@ -109,7 +109,7 @@ struct SetGameLogic {
     mutating func matchCard(indexes: [Int]) {
         if isSet(indexes: indexes) {
             for i in indexes {
-                dealtCards[i].isMatched = true
+                cards[i].isMatched = true
             }
         }
     }
@@ -119,11 +119,11 @@ struct SetGameLogic {
         if deck.count >= 3 {
             for i in selectedIndexes {
                 let cardToDeal = deck.remove(at: 0)
-                dealtCards[i] = cardToDeal
+                cards[i] = cardToDeal
             }
         } else {
             for i in selectedIndexes {
-                dealtCards.remove(at: i)
+                cards.remove(at: i)
             }
         }
         selectedIndexes = []
@@ -131,7 +131,7 @@ struct SetGameLogic {
     
     mutating func resetSelection() {
         for i in selectedIndexes {
-            dealtCards[i].isSelected.toggle()
+            cards[i].isSelected.toggle()
         }
         selectedIndexes = []
     }
@@ -140,7 +140,7 @@ struct SetGameLogic {
     mutating func selectCard(card: Card) {
         
         // Locate Card in Deck
-        if let targetIndex = dealtCards.firstIndex(matching: card) {
+        if let targetIndex = cards.firstIndex(matching: card) {
             if selectedIndexes.count < 3 {
                 updateSelect(index: targetIndex)
                 if selectedIndexes.count == 3 {
@@ -151,7 +151,7 @@ struct SetGameLogic {
                     // Remove matched cards then add to selected indexes
                     
                     removeMatchedCards()
-                    if let newTarget = dealtCards.firstIndex(matching: card) {
+                    if let newTarget = cards.firstIndex(matching: card) {
                         updateSelect(index: newTarget)
                     }
                 } else {
@@ -175,7 +175,7 @@ struct SetGameLogic {
             if deck.count >= 3 {
                 for _ in 0..<3 {
                     let cardToDeal = deck.remove(at: 0)
-                    dealtCards.append(cardToDeal)
+                    cards.append(cardToDeal)
                 }
             }
         }
