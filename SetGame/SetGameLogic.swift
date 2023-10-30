@@ -50,36 +50,42 @@ var Deck: [CardFace] {
 
 struct SetGameLogic {
     // MARK: --Properties
-    var cards: Array<Card>
+    var deck: Array<Card>
     var dealtCards: Array<Card>
+    var initialCardsToDeal = 3
     var selectedIndexes: Array<Int>
-    var numCardsDealt = 3
-    
+            
     // MARK: --Initializer
     init() {
-        // Build Cards Array
-        cards = []
-        var i = 0
+        // Build Deck, Shuffle
+        deck = []
+        var index = 0
         for face in Deck {
-            let card = Card(id: i, shape: face.shape, numberOfShapes: face.numberOfShapes, color: face.color, shade: face.shade)
-            cards.append(card)
-            i += 1
+            let card = Card(id: index, shape: face.shape, numberOfShapes: face.numberOfShapes, color: face.color, shade: face.shade)
+            deck.append(card)
+            index += 1
         }
-        cards.shuffle()
-        // Buil Array of Selected Indexes
+        deck.shuffle()
+        
+        // Build Selection Array
         selectedIndexes = []
+        
+        // Deal initial Cards
         dealtCards = []
+        for _ in 0..<initialCardsToDeal {
+            let cardToDeal = deck.remove(at: 0)
+            dealtCards.append(cardToDeal)
+        }
     }
     
     // MARK: --Game Logic
-    
     func isSet(indexes: [Int]) -> Bool {
         guard indexes.count == 3 else {
             return false // A Set always has three cards
         }
-        let card1 = cards[indexes[0]]
-        let card2 = cards[indexes[1]]
-        let card3 = cards[indexes[2]]
+        let card1 = dealtCards[indexes[0]]
+        let card2 = dealtCards[indexes[1]]
+        let card3 = dealtCards[indexes[2]]
         let shapeMatch = (card1.shape == card2.shape && card2.shape == card3.shape) || (card1.shape != card2.shape && card2.shape != card3.shape && card1.shape != card3.shape)
         let quantityMatch = (card1.numberOfShapes == card2.numberOfShapes && card2.numberOfShapes == card3.numberOfShapes) || (card1.numberOfShapes != card2.numberOfShapes && card2.numberOfShapes != card3.numberOfShapes && card1.numberOfShapes != card3.numberOfShapes)
         let colorMatch = (card1.color == card2.color && card2.color == card3.color) || (card1.color != card2.color && card2.color != card3.color && card1.color != card3.color)
@@ -90,7 +96,7 @@ struct SetGameLogic {
     
     mutating func updateSelect(index: Int) {
         // Toggle Selection Attribute
-        cards[index].isSelected.toggle()
+        dealtCards[index].isSelected.toggle()
         
         // Toggle Presence of Index in selectedIndexes
         if let targetIndex = selectedIndexes.enumerated().first(where: { $0.element == index })?.offset {
@@ -103,22 +109,29 @@ struct SetGameLogic {
     mutating func matchCard(indexes: [Int]) {
         if isSet(indexes: indexes) {
             for i in indexes {
-                cards[i].isMatched = true
+                dealtCards[i].isMatched = true
             }
         }
     }
     
     mutating func removeMatchedCards() {
-        selectedIndexes.sort()
-        cards.remove(at: selectedIndexes[2])
-        cards.remove(at: selectedIndexes[1])
-        cards.remove(at: selectedIndexes[0])
+        selectedIndexes.sort() { $0 > $1 }
+        if deck.count >= 3 {
+            for i in selectedIndexes {
+                let cardToDeal = deck.remove(at: 0)
+                dealtCards[i] = cardToDeal
+            }
+        } else {
+            for i in selectedIndexes {
+                dealtCards.remove(at: i)
+            }
+        }
         selectedIndexes = []
     }
     
     mutating func resetSelection() {
         for i in selectedIndexes {
-            cards[i].isSelected.toggle()
+            dealtCards[i].isSelected.toggle()
         }
         selectedIndexes = []
     }
@@ -127,7 +140,7 @@ struct SetGameLogic {
     mutating func selectCard(card: Card) {
         
         // Locate Card in Deck
-        if let targetIndex = cards.firstIndex(matching: card) {
+        if let targetIndex = dealtCards.firstIndex(matching: card) {
             if selectedIndexes.count < 3 {
                 updateSelect(index: targetIndex)
                 if selectedIndexes.count == 3 {
@@ -136,8 +149,11 @@ struct SetGameLogic {
             } else if selectedIndexes.count == 3 {
                 if isSet(indexes: selectedIndexes) {
                     // Remove matched cards then add to selected indexes
-                    updateSelect(index: targetIndex)
+                    
                     removeMatchedCards()
+                    if let newTarget = dealtCards.firstIndex(matching: card) {
+                        updateSelect(index: newTarget)
+                    }
                 } else {
                     // Remove from queue if allready there
                     if selectedIndexes.firstIndex(matching: targetIndex) != nil {
@@ -156,7 +172,12 @@ struct SetGameLogic {
         if isSet(indexes: selectedIndexes) {
             removeMatchedCards()
         } else {
-            numCardsDealt += 3
+            if deck.count >= 3 {
+                for _ in 0..<3 {
+                    let cardToDeal = deck.remove(at: 0)
+                    dealtCards.append(cardToDeal)
+                }
+            }
         }
         
     }

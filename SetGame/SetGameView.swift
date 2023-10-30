@@ -39,7 +39,6 @@ struct SetGameView: View {
                         setgame.newGame()
                     }
                     Spacer()
-                    
                 }
             }
             .padding()

@@ -13,7 +13,7 @@ import Foundation
     
     // MARK: - Model Access
     var dealtCards: Array<SetGameLogic.Card> {
-        return Array(game.cards.prefix(game.numCardsDealt))
+        return Array(game.dealtCards)
     }
 
     // MARK: - User Intents
@@ -30,6 +30,6 @@ import Foundation
     }   
     
     func countDealtCards() -> Int {
-        return game.numCardsDealt
+        return game.dealtCards.count
     }
 }
