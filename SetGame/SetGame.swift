@@ -11,6 +11,10 @@ import SwiftUI
 @Observable class SetGame {
     // MARK: - Properties
     private var game = SetGameLogic()
+    var initialCardsToDeal: Int {
+        game.initialCardsToDeal
+    }
+
     
     // MARK: - + Model Access
     var dealtCards: Array<SetGameLogic.Card> {
@@ -19,12 +23,16 @@ import SwiftUI
 
     // MARK: - User Intents
     func dealCards() {
-        for i in 0..<game.initialCardsToDeal {
+        for i in 0..<initialCardsToDeal-3 {
             let delay = Double(i) * Constants.delayFactor
             withAnimation(.easeInOut.delay(delay)) {
                 game.dealOneCard()
             }
         }
+        DispatchQueue.main.asyncAfter(deadline: .now() + Double(initialCardsToDeal) * 0.1) {
+            self.dealMoreCards()
+        }
+
     }
     
     func dealMoreCards() {
@@ -91,6 +99,7 @@ import SwiftUI
         game = SetGameLogic()
 //        dealtCards = []
         dealCards()
+        
     }
     
     

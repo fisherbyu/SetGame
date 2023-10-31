@@ -52,7 +52,7 @@ struct SetGameLogic {
     // MARK: --Properties
     var deck: Array<Card>
     var cards: Array<Card>
-    var initialCardsToDeal = 3
+    var initialCardsToDeal = 12
     var numCardsToDeal = 3
     var selectedIndexes: Array<Int>
             
