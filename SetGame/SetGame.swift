@@ -29,7 +29,7 @@ import SwiftUI
                 game.dealOneCard()
             }
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + Double(initialCardsToDeal) * 0.1) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + Double(initialCardsToDeal) * Constants.delayFactor) {
             self.dealMoreCards()
         }
 
@@ -76,14 +76,6 @@ import SwiftUI
             }
         }
     }
-
-    
-//    func removeOneCard(index: Int) {
-//        let delay = Constants.delayFactor
-//        withAnimation(.easeInOut.delay(delay)) {
-//            game.removeOneCard(index:index)
-//        }
-//    }
     
     func removeMatchedCards() {
         game.selectedIndexes.sort() { $0 > $1 }
@@ -97,24 +89,14 @@ import SwiftUI
     }
     func newGame() {
         game = SetGameLogic()
-//        dealtCards = []
         dealCards()
-        
     }
-    
-    
-    
-//    func selectCard(card: SetGameLogic.Card) {
-//        game.selectCard(card: card)
-//    }   
     
     func countDealtCards() -> Int {
         return game.cards.count
     }
-    
+    // MARK: --Constants
     struct Constants {
-        static let delayFactor = 0.1
+        static let delayFactor = 0.09
     }
 }
-
-

@@ -19,7 +19,6 @@ let segments = [
 struct Squiggle: Shape {
     func path(in rect: CGRect) -> Path {
         var path = Path()
-
         guard let lastSegment = segments.last else {
             return path
         }

@@ -62,7 +62,6 @@ struct CardView: View {
                 }
             }
         }
-        
     }
 }
 

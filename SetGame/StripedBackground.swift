@@ -14,7 +14,6 @@ struct StripedBackground: View {
         GeometryReader { geometry in
             let availableWidth = geometry.size.width
             let numStrips = Int(availableWidth / (Styles.width + Styles.space))
-            
             HStack(spacing: 0) {
                 ForEach(Array(0..<numStrips), id: \.self) {_ in
                     Color.clear

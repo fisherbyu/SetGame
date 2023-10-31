@@ -109,8 +109,6 @@ struct SetGameLogic {
         }
     }
     
-    
-    
     mutating func updateSelect(index: Int) {
         // Toggle Selection Attribute
         cards[index].isSelected.toggle()
@@ -131,50 +129,12 @@ struct SetGameLogic {
         }
     }
     
-//    mutating func removeMatchedCards() {
-//        selectedIndexes.sort() { $0 > $1 }
-//        for i in selectedIndexes {
-//            replaceOneCard(index: i)
-//        }
-//        selectedIndexes = []
-//    }
-    
     mutating func resetSelection() {
         for i in selectedIndexes {
             cards[i].isSelected.toggle()
         }
         selectedIndexes = []
     }
-    
-    // MARK: -- User Intents
-//    mutating func selectCard(card: Card) {
-//        // Locate Card in Deck
-//        if let targetIndex = cards.firstIndex(matching: card) {
-//            if selectedIndexes.count < 3 {
-//                updateSelect(index: targetIndex)
-//                if selectedIndexes.count == 3 {
-//                    matchCard(indexes: selectedIndexes)
-//                }
-//            } else if selectedIndexes.count == 3 {
-//                if isSet(indexes: selectedIndexes) {
-//                    // Remove matched cards then add to selected indexes
-//                    removeMatchedCards()
-//                    if let newTarget = cards.firstIndex(matching: card) {
-//                        updateSelect(index: newTarget)
-//                    }
-//                } else {
-//                    // Remove from queue if allready there
-//                    if selectedIndexes.firstIndex(matching: targetIndex) != nil {
-//                        updateSelect(index: targetIndex)
-//                    } else {
-//                        // New Selection
-//                        resetSelection()
-//                        updateSelect(index: targetIndex)
-//                    }
-//                }
-//            }
-//        }
-//    }
     
     // MARK: -- Components
     struct Card: Identifiable {
@@ -187,6 +147,3 @@ struct SetGameLogic {
         var isSelected = false
     }
 }
-
-
-

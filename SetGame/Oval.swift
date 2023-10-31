@@ -10,9 +10,7 @@ import SwiftUI
 struct Oval: Shape {
     func path(in rect: CGRect) -> Path {
         var path = Path()
-        
         path.addEllipse(in: rect)
-        
         return path
     }
 }

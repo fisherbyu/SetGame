@@ -35,9 +35,6 @@ struct ShapeView: View {
     
     @ViewBuilder
     private func shapeBuilder() -> some View {
-//        let height = size.height * Styles.reduceHeight
-//        let width = size.width * Styles.reduceWidth
-        
         ZStack {
             // Define Shapes + Borders
             let diamond = Diamond()
