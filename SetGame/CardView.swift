@@ -22,10 +22,12 @@ struct CardView: View {
                 VStack {
                     HStack {
                         ShapeView(card: card, color: content.color, size: geometry.size)
+                            
                     }
+                    .frame(width: geometry.size.width * 0.99, height: geometry.size.height * 0.9)
                 }
             }
-            .aspectRatio(Card.aspectRatio, contentMode: .fit)
+//            .aspectRatio(Card.aspectRatio, contentMode: .fit)
             .foregroundStyle(content.color)
         }
         .aspectRatio(Card.aspectRatio, contentMode: .fit)
