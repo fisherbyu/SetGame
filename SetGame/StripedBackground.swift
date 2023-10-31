@@ -11,26 +11,23 @@ struct StripedBackground: View {
     let color: Color
     
     var body: some View {
-//        HStack(spacing: 0) {
-//            ForEach(0..<Styles.numStrips, id: \.self) { number in
-//                Color.clear
-//                color.frame(width: Styles.width)
-//                if number == Styles.numStrips - 1 {
-//                    Color.clear
-//                }
-//            }
-//        }
-        HStack(spacing:0) {
-            ForEach(0..<12) {number in
-                Color.clear
-                color.frame(width: Styles.width)
+        GeometryReader { geometry in
+            let availableWidth = geometry.size.width
+            let numStrips = Int(availableWidth / (Styles.width + Styles.space))
+            
+            HStack(spacing: 0) {
+                ForEach(Array(0..<numStrips), id: \.self) {_ in
+                    Color.clear
+                    color.frame(width: Styles.width)
+                    Color.clear
+                }
             }
         }
     }
     
     private struct Styles {
         static let width: CGFloat = 1
-        static let numStrips = 3
+        static let space: CGFloat = 2
     }
 }
 
