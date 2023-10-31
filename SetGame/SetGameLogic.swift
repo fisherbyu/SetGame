@@ -73,8 +73,7 @@ struct SetGameLogic {
         // Deal initial Cards
         cards = []
         for _ in 0..<initialCardsToDeal {
-            let cardToDeal = deck.remove(at: 0)
-            cards.append(cardToDeal)
+            dealOneCard()
         }
     }
     
@@ -92,6 +91,11 @@ struct SetGameLogic {
         let shadeMatch = (card1.shade == card2.shade && card2.shade == card3.shade) || (card1.shade != card2.shade && card2.shade != card3.shade && card1.shade != card3.shade)
 
         return shapeMatch && quantityMatch && colorMatch && shadeMatch
+    }
+    
+    mutating func dealOneCard() {
+        let cardToDeal = deck.remove(at: 0)
+        cards.append(cardToDeal)
     }
     
     mutating func updateSelect(index: Int) {
@@ -138,7 +142,6 @@ struct SetGameLogic {
     
     // MARK: -- User Intents
     mutating func selectCard(card: Card) {
-        
         // Locate Card in Deck
         if let targetIndex = cards.firstIndex(matching: card) {
             if selectedIndexes.count < 3 {
@@ -149,7 +152,6 @@ struct SetGameLogic {
             } else if selectedIndexes.count == 3 {
                 if isSet(indexes: selectedIndexes) {
                     // Remove matched cards then add to selected indexes
-                    
                     removeMatchedCards()
                     if let newTarget = cards.firstIndex(matching: card) {
                         updateSelect(index: newTarget)
@@ -174,8 +176,7 @@ struct SetGameLogic {
         } else {
             if deck.count >= 3 {
                 for _ in 0..<3 {
-                    let cardToDeal = deck.remove(at: 0)
-                    cards.append(cardToDeal)
+                    dealOneCard()
                 }
             }
         }
