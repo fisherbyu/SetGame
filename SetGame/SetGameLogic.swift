@@ -53,6 +53,7 @@ struct SetGameLogic {
     var deck: Array<Card>
     var cards: Array<Card>
     var initialCardsToDeal = 3
+    var numCardsToDeal = 3
     var selectedIndexes: Array<Int>
             
     // MARK: --Initializer
@@ -67,24 +68,19 @@ struct SetGameLogic {
         }
         deck.shuffle()
         
-        // Build Selection Array
+        // Build Card Selection Arrays
         selectedIndexes = []
-        
-        // Deal initial Cards
         cards = []
-        for _ in 0..<initialCardsToDeal {
-            dealOneCard()
-        }
     }
     
     // MARK: --Game Logic
-    func isSet(indexes: [Int]) -> Bool {
-        guard indexes.count == 3 else {
+    func isSet() -> Bool {
+        guard selectedIndexes.count == 3 else {
             return false // A Set always has three cards
         }
-        let card1 = cards[indexes[0]]
-        let card2 = cards[indexes[1]]
-        let card3 = cards[indexes[2]]
+        let card1 = cards[selectedIndexes[0]]
+        let card2 = cards[selectedIndexes[1]]
+        let card3 = cards[selectedIndexes[2]]
         let shapeMatch = (card1.shape == card2.shape && card2.shape == card3.shape) || (card1.shape != card2.shape && card2.shape != card3.shape && card1.shape != card3.shape)
         let quantityMatch = (card1.numberOfShapes == card2.numberOfShapes && card2.numberOfShapes == card3.numberOfShapes) || (card1.numberOfShapes != card2.numberOfShapes && card2.numberOfShapes != card3.numberOfShapes && card1.numberOfShapes != card3.numberOfShapes)
         let colorMatch = (card1.color == card2.color && card2.color == card3.color) || (card1.color != card2.color && card2.color != card3.color && card1.color != card3.color)
@@ -94,9 +90,26 @@ struct SetGameLogic {
     }
     
     mutating func dealOneCard() {
-        let cardToDeal = deck.remove(at: 0)
-        cards.append(cardToDeal)
+        if deck.count > 0 {
+            let cardToDeal = deck.remove(at: 0)
+            cards.append(cardToDeal)
+        }
     }
+    
+    mutating func removeOneCard(index: Int) {
+        cards.remove(at: index)
+    }
+    
+    mutating func replaceOneCard(index: Int) {
+        if deck.count > 0 {
+            let cardToDeal = deck.remove(at: 0)
+            cards[index] = cardToDeal
+        } else {
+            cards.remove(at: index)
+        }
+    }
+    
+    
     
     mutating func updateSelect(index: Int) {
         // Toggle Selection Attribute
@@ -110,28 +123,21 @@ struct SetGameLogic {
         }
     }
     
-    mutating func matchCard(indexes: [Int]) {
-        if isSet(indexes: indexes) {
-            for i in indexes {
+    mutating func matchCards() {
+        if isSet() {
+            for i in selectedIndexes {
                 cards[i].isMatched = true
             }
         }
     }
     
-    mutating func removeMatchedCards() {
-        selectedIndexes.sort() { $0 > $1 }
-        if deck.count >= 3 {
-            for i in selectedIndexes {
-                let cardToDeal = deck.remove(at: 0)
-                cards[i] = cardToDeal
-            }
-        } else {
-            for i in selectedIndexes {
-                cards.remove(at: i)
-            }
-        }
-        selectedIndexes = []
-    }
+//    mutating func removeMatchedCards() {
+//        selectedIndexes.sort() { $0 > $1 }
+//        for i in selectedIndexes {
+//            replaceOneCard(index: i)
+//        }
+//        selectedIndexes = []
+//    }
     
     mutating func resetSelection() {
         for i in selectedIndexes {
@@ -141,46 +147,34 @@ struct SetGameLogic {
     }
     
     // MARK: -- User Intents
-    mutating func selectCard(card: Card) {
-        // Locate Card in Deck
-        if let targetIndex = cards.firstIndex(matching: card) {
-            if selectedIndexes.count < 3 {
-                updateSelect(index: targetIndex)
-                if selectedIndexes.count == 3 {
-                    matchCard(indexes: selectedIndexes)
-                }
-            } else if selectedIndexes.count == 3 {
-                if isSet(indexes: selectedIndexes) {
-                    // Remove matched cards then add to selected indexes
-                    removeMatchedCards()
-                    if let newTarget = cards.firstIndex(matching: card) {
-                        updateSelect(index: newTarget)
-                    }
-                } else {
-                    // Remove from queue if allready there
-                    if selectedIndexes.firstIndex(matching: targetIndex) != nil {
-                        updateSelect(index: targetIndex)
-                    } else {
-                        // New Selection
-                        resetSelection()
-                        updateSelect(index: targetIndex)
-                    }
-                }
-            }
-        }
-    }
-    
-    mutating func dealMoreCards() {
-        if isSet(indexes: selectedIndexes) {
-            removeMatchedCards()
-        } else {
-            if deck.count >= 3 {
-                for _ in 0..<3 {
-                    dealOneCard()
-                }
-            }
-        }
-    }
+//    mutating func selectCard(card: Card) {
+//        // Locate Card in Deck
+//        if let targetIndex = cards.firstIndex(matching: card) {
+//            if selectedIndexes.count < 3 {
+//                updateSelect(index: targetIndex)
+//                if selectedIndexes.count == 3 {
+//                    matchCard(indexes: selectedIndexes)
+//                }
+//            } else if selectedIndexes.count == 3 {
+//                if isSet(indexes: selectedIndexes) {
+//                    // Remove matched cards then add to selected indexes
+//                    removeMatchedCards()
+//                    if let newTarget = cards.firstIndex(matching: card) {
+//                        updateSelect(index: newTarget)
+//                    }
+//                } else {
+//                    // Remove from queue if allready there
+//                    if selectedIndexes.firstIndex(matching: targetIndex) != nil {
+//                        updateSelect(index: targetIndex)
+//                    } else {
+//                        // New Selection
+//                        resetSelection()
+//                        updateSelect(index: targetIndex)
+//                    }
+//                }
+//            }
+//        }
+//    }
     
     // MARK: -- Components
     struct Card: Identifiable {
