@@ -20,9 +20,13 @@ struct SetGameView: View {
                             .onTapGesture {
                                 setgame.selectCard(card: card)
                             }
+                            .transition(.offset(randomOffscreenLocation()))
                         .aspectRatio(2/3, contentMode: .fill)
                     }
                 }
+                .onAppear(perform: {
+                    setgame.dealCards()
+                })
                 Spacer()
                 // Game Controls
                 HStack {

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 @Observable class SetGame {
     // MARK: - Properties
@@ -20,6 +21,14 @@ import Foundation
 //    var dealtCards: Array<SetGameLogic.Card> {
 //        return Array(game.cards)
 //    }
+    func dealCards() {
+        for i in 0..<3 {
+            let delay = Double(i) * Constants.delayFactor
+            withAnimation(.easeInOut.delay(delay)) {
+                dealtCards.append(game.cards[i])
+            }
+        }
+    }
 
     // MARK: - User Intents
     func dealMoreCards() {
@@ -28,6 +37,8 @@ import Foundation
     
     func newGame() {
         game = SetGameLogic()
+        dealtCards = []
+        dealCards()
     }
     
     func selectCard(card: SetGameLogic.Card) {
@@ -36,5 +47,9 @@ import Foundation
     
     func countDealtCards() -> Int {
         return game.cards.count
+    }
+    
+    struct Constants {
+        static let delayFactor = 0.15
     }
 }
