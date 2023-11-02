@@ -74,19 +74,23 @@ struct SetGameLogic {
     }
     
     // MARK: --Game Logic
+    func IsSetCandidate<E: Equatable>(_ c1: E, _ c2: E, _ c3: E) -> Bool {
+        c1 == c2 && c2 == c3 ||
+        c1 != c2 && c2 != c3 && c1 != c3
+    }
     func isSet() -> Bool {
         guard selectedIndexes.count == 3 else {
             return false // A Set always has three cards
         }
-        let card1 = cards[selectedIndexes[0]]
-        let card2 = cards[selectedIndexes[1]]
-        let card3 = cards[selectedIndexes[2]]
-        let shapeMatch = (card1.shape == card2.shape && card2.shape == card3.shape) || (card1.shape != card2.shape && card2.shape != card3.shape && card1.shape != card3.shape)
-        let quantityMatch = (card1.numberOfShapes == card2.numberOfShapes && card2.numberOfShapes == card3.numberOfShapes) || (card1.numberOfShapes != card2.numberOfShapes && card2.numberOfShapes != card3.numberOfShapes && card1.numberOfShapes != card3.numberOfShapes)
-        let colorMatch = (card1.color == card2.color && card2.color == card3.color) || (card1.color != card2.color && card2.color != card3.color && card1.color != card3.color)
-        let shadeMatch = (card1.shade == card2.shade && card2.shade == card3.shade) || (card1.shade != card2.shade && card2.shade != card3.shade && card1.shade != card3.shade)
-
-        return shapeMatch && quantityMatch && colorMatch && shadeMatch
+        
+        let c1 = cards[selectedIndexes[0]]
+        let c2 = cards[selectedIndexes[1]]
+        let c3 = cards[selectedIndexes[2]]
+        
+        return IsSetCandidate(c1.shape, c2.shape, c3.shape)
+        && IsSetCandidate(c1.color, c2.color, c3.color)
+        && IsSetCandidate(c1.numberOfShapes, c2.numberOfShapes, c3.numberOfShapes)
+        && IsSetCandidate(c1.shade, c2.shade, c3.shade)
     }
     
     mutating func dealOneCard() {
