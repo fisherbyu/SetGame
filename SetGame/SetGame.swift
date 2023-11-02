@@ -95,6 +95,9 @@ import SwiftUI
     func countDealtCards() -> Int {
         return game.cards.count
     }
+    func countRemainingCards() -> Int {
+        return game.deck.count
+    }
     // MARK: --Constants
     struct Constants {
         static let delayFactor = 0.09

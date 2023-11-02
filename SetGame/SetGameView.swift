@@ -32,7 +32,7 @@ struct SetGameView: View {
                 HStack {
                     Spacer()
                     // Only add three is there are cards to deal
-                    if setgame.countDealtCards() < 81 {
+                    if setgame.countRemainingCards() > 3 {
                         Button("Deal 3") {
                             setgame.dealMoreCards()
                         }
